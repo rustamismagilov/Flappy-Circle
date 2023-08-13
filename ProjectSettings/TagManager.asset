@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PointsCounter
+  - Obstacle
   layers:
   - Default
   - TransparentFX

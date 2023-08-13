@@ -24,12 +24,14 @@ public class Spawner : MonoBehaviour
     private void Update()
     {
         // Check if it's time to spawn a new coin
+         
         if (Time.time >= nextCoinSpawnTime)
         {
             SpawnCoin();
             // Update the next coin spawn time
             nextCoinSpawnTime = Time.time + GetRandomSpawnInterval(minCoinSpawnInterval, maxCoinSpawnInterval);
         }
+        
 
         // Check if it's time to spawn a new obstacle
         if (Time.time >= nextObstacleSpawnTime)
