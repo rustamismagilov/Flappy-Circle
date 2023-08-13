@@ -10,7 +10,13 @@ public class Coin : MonoBehaviour
 
     private bool movingUp = true;
 
-    public int coinValue = 1; // The value of the coin when collected
+    public int coinValue; // The value of the coin when collected
+
+    private void Start()
+    {
+        // Set a random start movement direction
+        movingUp = Random.Range(0, 2) == 0; // 50% chance of moving up, 50% chance of moving down
+    }
 
     private void Update()
     {
@@ -31,21 +37,22 @@ public class Coin : MonoBehaviour
         {
             movingUp = !movingUp;
         }
+
+        // Check if the obstacle's X position is beyond the minimum X position
+        if (transform.position.x <= minXPosition)
+        {
+            // Destroy the obstacle GameObject
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the coin has collided with the main character
         if (other.CompareTag("Player"))
         {
             // Call a method to handle the coin collection
-            CollectCoin();
+            Destroy(gameObject);
+            CoinsCounter.instance.IncreaseCoins(coinValue);
         }
-    }
-
-    private void CollectCoin()
-    {
-        // Destroy the coin GameObject after collection
-        Destroy(gameObject);
     }
 }

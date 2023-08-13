@@ -10,6 +10,12 @@ public class ObstacleMovement : MonoBehaviour
 
     private bool movingUp = true;
 
+    private void Start()
+    {
+        // Set a random start movement direction
+        movingUp = Random.Range(0, 2) == 0; // 50% chance of moving up, 50% chance of moving down
+    }
+
     private void Update()
     {
         // Move the obstacle from right to left along the X-axis
@@ -28,6 +34,13 @@ public class ObstacleMovement : MonoBehaviour
         if (newYPosition >= maxYPosition || newYPosition <= minYPosition)
         {
             movingUp = !movingUp;
+        }
+
+        // Check if the obstacle's X position is beyond the minimum X position
+        if (transform.position.x <= minXPosition)
+        {
+            // Destroy the obstacle GameObject
+            Destroy(gameObject);
         }
     }
 }

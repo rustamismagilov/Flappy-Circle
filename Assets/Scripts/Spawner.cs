@@ -6,29 +6,55 @@ public class Spawner : MonoBehaviour
     public GameObject obstaclePrefab; // Reference to the obstacle prefab
     public Transform spawnPoint; // Reference to the spawn point empty GameObject
 
-    public float spawnInterval = 2.0f; // Time interval between spawns
-    private float nextSpawnTime = 0.0f; // Time to perform the next spawn
+    public float minCoinSpawnInterval = 2.0f; // Minimum time interval between coin spawns
+    public float maxCoinSpawnInterval = 4.0f; // Maximum time interval between coin spawns
+    public float minObstacleSpawnInterval = 3.0f; // Minimum time interval between obstacle spawns
+    public float maxObstacleSpawnInterval = 6.0f; // Maximum time interval between obstacle spawns
+
+    private float nextCoinSpawnTime = 0.0f; // Time to perform the next coin spawn
+    private float nextObstacleSpawnTime = 0.0f; // Time to perform the next obstacle spawn
+
+    private void Start()
+    {
+        // Initialize the initial spawn times for coins and obstacles
+        nextCoinSpawnTime = Time.time + GetRandomSpawnInterval(minCoinSpawnInterval, maxCoinSpawnInterval);
+        nextObstacleSpawnTime = Time.time + GetRandomSpawnInterval(minObstacleSpawnInterval, maxObstacleSpawnInterval);
+    }
 
     private void Update()
     {
-        // Check if it's time to spawn a new object
-        if (Time.time >= nextSpawnTime)
+        // Check if it's time to spawn a new coin
+        if (Time.time >= nextCoinSpawnTime)
         {
-            SpawnObject();
-            // Update the next spawn time
-            nextSpawnTime = Time.time + spawnInterval;
+            SpawnCoin();
+            // Update the next coin spawn time
+            nextCoinSpawnTime = Time.time + GetRandomSpawnInterval(minCoinSpawnInterval, maxCoinSpawnInterval);
+        }
+
+        // Check if it's time to spawn a new obstacle
+        if (Time.time >= nextObstacleSpawnTime)
+        {
+            SpawnObstacle();
+            // Update the next obstacle spawn time
+            nextObstacleSpawnTime = Time.time + GetRandomSpawnInterval(minObstacleSpawnInterval, maxObstacleSpawnInterval);
         }
     }
 
-    private void SpawnObject()
+    private void SpawnCoin()
     {
-        // Randomly determine whether to spawn a coin or an obstacle
-        bool spawnCoin = Random.Range(0, 2) == 0;
+        // Instantiate the coin prefab at the spawn point's position
+        Instantiate(coinPrefab, spawnPoint.position, Quaternion.identity);
+    }
 
-        // Determine the prefab to spawn based on the random choice
-        GameObject prefabToSpawn = spawnCoin ? coinPrefab : obstaclePrefab;
+    private void SpawnObstacle()
+    {
+        // Instantiate the obstacle prefab at the spawn point's position
+        Instantiate(obstaclePrefab, spawnPoint.position, Quaternion.identity);
+    }
 
-        // Instantiate the chosen prefab at the spawn point's position
-        Instantiate(prefabToSpawn, spawnPoint.position, Quaternion.identity);
+    private float GetRandomSpawnInterval(float minInterval, float maxInterval)
+    {
+        // Generate a random spawn interval within the specified range
+        return Random.Range(minInterval, maxInterval);
     }
 }
