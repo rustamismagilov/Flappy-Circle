@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 925d822afbda4d24094c95d31c7c4c1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  xMoveSpeed: 2
+  yMoveSpeed: 3
+  minYPosition: -4.35
+  maxYPosition: 4.35
   minXPosition: -10
   coinValue: 1
 --- !u!61 &5774255469064866799
