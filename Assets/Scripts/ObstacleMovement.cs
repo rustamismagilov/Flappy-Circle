@@ -15,12 +15,6 @@ public class ObstacleMovement : MonoBehaviour
         // Move the obstacle from right to left along the X-axis
         transform.Translate(Vector3.left * xMoveSpeed * Time.deltaTime);
 
-        // Respawn the obstacle if it goes beyond minXPosition
-        if (transform.position.x <= minXPosition)
-        {
-            RespawnObstacle();
-        }
-
         // Calculate the new vertical position using yMoveSpeed
         float newYPosition = transform.position.y + (movingUp ? 1 : -1) * yMoveSpeed * Time.deltaTime;
 
@@ -35,15 +29,5 @@ public class ObstacleMovement : MonoBehaviour
         {
             movingUp = !movingUp;
         }
-    }
-
-    private void RespawnObstacle()
-    {
-        // Randomly determine the Y position within the desired range
-        float newYPosition = Random.Range(minYPosition, maxYPosition);
-
-        // Move the obstacle outside the screen on the opposite side
-        float newPosX = 10f; // The X coordinate where obstacles should respawn
-        transform.position = new Vector3(newPosX, newYPosition, transform.position.z);
     }
 }

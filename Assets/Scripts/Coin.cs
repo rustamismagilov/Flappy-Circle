@@ -11,22 +11,9 @@ public class Coin : MonoBehaviour
         // Move the coin from right to left along the X-axis
         transform.Translate(Vector3.left * moveSpeed * Time.deltaTime);
 
-        // Respawn the coin if it goes beyond minXPosition
-        if (transform.position.x <= minXPosition)
-        {
-            RespawnCoin();
-        }
+        
     }
 
-    private void RespawnCoin()
-    {
-        // Randomly determine the Y position within the desired range
-        float newYPosition = Random.Range(-4.35f, 4.35f);
-
-        // Move the coin outside the screen on the opposite side
-        float newPosX = 10f; // The X coordinate where coins should respawn
-        transform.position = new Vector3(newPosX, newYPosition, transform.position.z);
-    }
 
     
 
